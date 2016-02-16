@@ -153,7 +153,7 @@ class baxter_kinematics(object):
                                  end_frame)
         return end_frame.GetTwist()
 
-    def inverse_kinematics(self, position, orientation=None, seed=None, min_joints=None, max_joints=None):
+    def inverse_kinematics(self, position, orientation=None, seed=None, min_joints=None, max_joints=None, maxiter=500, eps=1.0e-6):
         ik = PyKDL.ChainIkSolverVel_pinv(self._arm_chain)
         pos = PyKDL.Vector(position[0], position[1], position[2])
         if orientation is not None:
@@ -186,7 +186,7 @@ class baxter_kinematics(object):
         maxs_kdl = PyKDL.JntArray(len(max_joints))
         for idx,jnt in enumerate(max_joints):  maxs_kdl[idx] = jnt
         ik_p_kdl = PyKDL.ChainIkSolverPos_NR_JL(self._arm_chain, mins_kdl, maxs_kdl,
-                                                self._fk_p_kdl, self._ik_v_kdl)
+                                                self._fk_p_kdl, self._ik_v_kdl, maxiter, eps)
 
         if ik_p_kdl.CartToJnt(seed_array, goal_pose, result_angles) >= 0:
             result = np.array(list(result_angles))
