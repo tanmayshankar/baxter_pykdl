@@ -82,7 +82,7 @@ class baxter_kinematics(object):
 
 	def print_kdl_chain(self):
 		for idx in xrange(self._arm_chain.getNrOfSegments()):
-			print '* ' + self._arm_chain.getSegment(idx).getName()
+			print('* ' + self._arm_chain.getSegment(idx).getName())
 
 	def get_joint_information(self):
 		joints = {}
