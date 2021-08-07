@@ -30,7 +30,7 @@
 import numpy as np
 import PyKDL
 
-import rospy
+# import rospy
 
 import baxter_interface
 
